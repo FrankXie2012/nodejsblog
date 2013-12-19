@@ -10,5 +10,7 @@
     <img src="<%= post.image.path.split('public')[1] %>" height="200" width="200" />
   <% } %>
 <% }) %>
-<%- include paging %>
+<% if (posts != '' && total > 10) { %>
+	<%- include paging %>
+<% } %>
 <%- include footer %>
