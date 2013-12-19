@@ -18,3 +18,8 @@ a {
 	font-family: 'Alex Brush', cursive;
 	color: HSLA(0.48, 83.89%, 70.78%, 1);
 }
+
+.paging{
+	margin-top: 30px;
+	text-align: center;
+}

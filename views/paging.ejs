@@ -1,0 +1,21 @@
+<div class="paging">
+	<ul class="pagination">
+	<% if (!isLastPage) { %>
+		<li class="disabled"><a href="#">&laquo;</a></li>
+	<% } else { %>
+		<li><a href="?p=<%= page-1 %>">&laquo;</a></li>
+	<% } %>
+	<% for (var i = 1; i <= Math.floor(total/10)+1; i++) { %>
+		<% if (i == page) { %>
+			<li class="active"><a href="?p=<%= i %>"><%= i %></a></li>
+		<% } else{ %>
+			<li><a href="?p=<%= i %>"><%= i %></a></li>
+		<% } %>
+	<% }; %>
+	<% if(!isFirstPage) { %>
+		<li class="disabled"><a href="#">&raquo;</a></li>
+	<% } else { %>
+		<li><a href="?p=<%= page+1 %>">&raquo;</a></li>
+	<% } %>
+	</ul>
+</div>
