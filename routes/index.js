@@ -1,16 +1,8 @@
-
-/*
- * GET home page.
- */
-
-// exports.index = function(req, res){
-//   res.render('index', { title: 'Express' });
-// };
-
 var crypto = require('crypto'),
     fs = require('fs'),
     User = require('../models/user.js'),
     Post = require('../models/post.js');
+    Comment = require('../models/comment.js');
 
 module.exports = function(app){
     app.get('/', function (req, res) {
@@ -121,7 +113,7 @@ module.exports = function(app){
     app.post('/post', checkLogin);
     app.post('/post', function (req, res) {
       var currentUser = req.session.user,
-        post = new Post(currentUser.name, req.body.title, req.body.post, req.body.file);
+        post = new Post(currentUser.name, req.body.title, req.body.post, req.files.image);
       post.save(function(err){
         if (err) {
           req.flash('error', err);
@@ -163,7 +155,7 @@ module.exports = function(app){
       });
     });
 
-    app.get('/u/:name/:title', function(req, res){
+    app.get('/u/:name/:title', function (req, res){
       Post.getOne(req.params.name, req.params.title, function(err, post){
         if (err) {
           req.flash('error', err);
@@ -179,6 +171,28 @@ module.exports = function(app){
         });
       });
     });
+
+    app.post('/u/:name/:title', function (req, res) {
+      var date = new Date(),
+          time = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+      var comment = {
+        name: req.body.name,
+        email: req.body.email,
+        website: req.body.website,
+        time: time,
+        content: req.body.content
+      };
+      var newComment = new Comment(req.params.name, req.params.title, comment);
+      newComment.save(function (err) {
+        if (err) {
+          req.flash('error', err);
+          return res.redirect('back');
+        }
+        req.flash('success', '留言成功');
+        res.redirect('back');
+      });
+    });
+
     app.get('/edit/:name/:title', checkLogin);
     app.get('/edit/:name/:title', function(req, res){
       var currentUser = req.session.user;
@@ -200,7 +214,7 @@ module.exports = function(app){
     app.post('/edit/:name/:title', checkLogin);
     app.post('/edit/:name/:title', function (req, res) {
       var currentUser = req.session.user;
-      Post.update(currentUser.name, req.params.title, req.body.post, function (err) {
+      Post.update(currentUser.name, req.params.title, req.body.post, req.files.image, function (err) {
         var url = '/u/' + req.params.name + '/' + req.params.title;
         if (err) {
           req.flash('error', err);

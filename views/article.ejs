@@ -8,5 +8,8 @@
   日期：<%= post.time.minute %>
 </p>
 <p><%- post.post %></p>
-<p><img src="<%= post.file %>"></p>
+<% if (post.image != '') { %>
+	<p><img src="<%= post.image.path.split('public')[1] %>"></p>
+<% }; %>
+<%- include comment %>
 <%- include footer %>

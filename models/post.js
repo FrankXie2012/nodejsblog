@@ -1,11 +1,11 @@
 var mongodb = require('./db');
 var markdown = require('markdown').markdown;
 
-function Post(name, title, post, file) {
+function Post(name, title, post, image) {
   this.name = name;
   this.title = title;
   this.post = post;
-  this.file = file;
+  this.image = image;
 }
 
 module.exports = Post;
@@ -28,7 +28,8 @@ Post.prototype.save = function(callback) {
       time: time,
       title: this.title,
       post: this.post,
-      file: this.file
+      image: this.image,
+      comments: []
   };
   //打开数据库
   mongodb.open(function (err, db) {
@@ -112,7 +113,12 @@ Post.getOne = function(name, title, callback) {
           return callback(err);
         }
         //解析 markdown 为 html
-        doc.post = markdown.toHTML(doc.post);
+        if (doc) {
+          doc.post = markdown.toHTML(doc.post);
+          doc.comments.forEach(function (comment) {
+            comment.content = markdown.toHTML(comment.content);
+          });
+        }
         callback(null, doc);//返回查询的一篇文章
       });
     });
@@ -145,7 +151,7 @@ Post.edit = function(name, title, callback) {
 };
 
 //更新一篇文章及其相关信息
-Post.update = function(name, title, post, callback) {
+Post.update = function(name, title, post, image, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -158,18 +164,33 @@ Post.update = function(name, title, post, callback) {
         return callback(err);
       }
       //更新文章内容
-      collection.update({
-        "name": name,
-        "title": title
-      }, {
-        $set: {post: post}
-      }, function (err) {
-        mongodb.close();
-        if (err) {
-          return callback(err);
-        }
-        callback(null);
-      });
+      if (image.originalFilename === '') {
+        collection.update({
+          "name": name,
+          "title": title
+        }, {
+          $set: {post: post, image: ''}
+        }, function (err) {
+          mongodb.close();
+          if (err) {
+            return callback(err);
+          }
+          callback(null);
+        });
+      } else {
+        collection.update({
+          "name": name,
+          "title": title
+        }, {
+          $set: {post: post, image: image}
+        }, function (err) {
+          mongodb.close();
+          if (err) {
+            return callback(err);
+          }
+          callback(null);
+        });
+      }
     });
   });
 };

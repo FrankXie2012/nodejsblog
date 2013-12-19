@@ -6,6 +6,6 @@
     日期：<%= post.time.minute %>
   </p>
   <p><%- post.post %></p>
-  <img src="<%- post.file %>" />
+  <img src="<%= post.image.path.split('public')[1] %>" height="200" width="200" />
 <% }) %>
 <%- include footer %>
