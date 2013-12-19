@@ -155,7 +155,7 @@ module.exports = function(app){
             posts: posts,
             page: page,
             total: total,
-            isFirstPage: (page-1)==0,
+            isFirstPage: (page-1)===0,
             isLastPage: ((page-1)*10+posts.length)==total,
             user : req.session.user,
             success: req.flash('success').toString(),
@@ -245,6 +245,22 @@ module.exports = function(app){
         }
         req.flash('success', '删除成功!');
         res.redirect('/');
+      });
+    });
+
+    app.get('/archive', function (req, res) {
+      Post.getArchive(function (err, posts) {
+        if (err) {
+          req.flash('error', err);
+          return res.redirect('/');
+        }
+        res.render('archive', {
+          title: 'Archive',
+          posts: posts,
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString()
+        })
       });
     });
 
