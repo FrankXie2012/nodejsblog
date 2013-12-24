@@ -1,6 +1,7 @@
 <br>
 <% post.comments.forEach(function (comment, index) { %>
 	<p>
+		<img src="<%= comment.head %>" class="img-thumbnail" alt="<%= comment.name %>" onError="this.src='/images/guitar1.png'" height="48" width="48" />
 		<a href="<%= comment.website %>"><%= comment.name %></a>
 		<span class="info"> 回复于 <%= comment.time %></span>
 	</p>

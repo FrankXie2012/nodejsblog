@@ -6,10 +6,17 @@
 <p class="info">
   作者：<a href="/u/<%= post.name %>"><%= post.name %></a> |
   日期：<%= post.time.minute %>
+  标签：
+    <% post.tags.forEach(function (tag,index) { %>
+      <% if (tag) { %>
+        <a href="/tag/<%= tag %>" class="label label-primary"><%= tag %></a>
+      <% } %>
+    <% }) %>
 </p>
 <p><%- post.post %></p>
 <% if (post.image != '') { %>
 	<p><img src="<%= post.image.path.split('public')[1] %>"></p>
 <% }; %>
+<p class="info">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
 <%- include comment %>
 <%- include footer %>

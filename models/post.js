@@ -1,11 +1,13 @@
 var mongodb = require('./db');
 var markdown = require('markdown').markdown;
 
-function Post(name, title, post, image) {
+function Post(name, head, title, post, tags, image) {
   this.name = name;
+  this.head = head;
   this.title = title;
   this.post = post;
   this.image = image;
+  this.tags = tags;
 }
 
 module.exports = Post;
@@ -23,19 +25,18 @@ Post.prototype.save = function(callback) {
       date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
   };
   //要存入数据库的文档
-
-  if (this.image.originalFilename === '') {
-    this.image = '';
-  }
-
   var post = {
       name: this.name,
+      head: this.head,
       time: time,
       title: this.title,
       post: this.post,
       image: this.image,
-      comments: []
+      tags: this.tags,
+      comments: [],
+      pv: 0
   };
+
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -118,12 +119,23 @@ Post.getOne = function(name, title, callback) {
         "name": name,
         "title": title
       }, function (err, doc) {
-        mongodb.close();
         if (err) {
+          mongodb.close();
           return callback(err);
         }
         //解析 markdown 为 html
         if (doc) {
+          collection.update({
+            'name': name,
+            'title': title
+          }, {
+            $inc: {'pv': 1}
+          }, function (err) {
+            mongodb.close();
+            if (err) {
+              return callback(err);
+            }
+          });
           doc.post = markdown.toHTML(doc.post);
           doc.comments.forEach(function (comment) {
             comment.content = markdown.toHTML(comment.content);
@@ -161,7 +173,7 @@ Post.edit = function(name, title, callback) {
 };
 
 //更新一篇文章及其相关信息
-Post.update = function(name, title, post, image, callback) {
+Post.update = function(name, title, post, tags, image, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -174,33 +186,18 @@ Post.update = function(name, title, post, image, callback) {
         return callback(err);
       }
       //更新文章内容
-      if (image.originalFilename === '') {
-        collection.update({
-          "name": name,
-          "title": title
-        }, {
-          $set: {post: post, image: ''}
-        }, function (err) {
-          mongodb.close();
-          if (err) {
-            return callback(err);
-          }
-          callback(null);
-        });
-      } else {
-        collection.update({
-          "name": name,
-          "title": title
-        }, {
-          $set: {post: post, image: image}
-        }, function (err) {
-          mongodb.close();
-          if (err) {
-            return callback(err);
-          }
-          callback(null);
-        });
-      }
+      collection.update({
+        "name": name,
+        "title": title
+      }, {
+        $set: {post: post, image: image}
+      }, function (err) {
+        mongodb.close();
+        if (err) {
+          return callback(err);
+        }
+        callback(null);
+      });
     });
   });
 };
@@ -256,6 +253,87 @@ Post.getArchive = function (callback) {
         mongodb.close();
         if (err) {
           return callback(err);
+        }
+        callback(null, docs);
+      });
+    });
+  });
+};
+
+Post.getTags = function(callback) {
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection('posts', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      collection.distinct('tags', function (err, docs) {
+        mongodb.close();
+        if (err) {
+          return callback(err);
+        }
+        callback(null, docs);
+      });
+    });
+  });
+};
+
+Post.getTag = function(tag, callback) {
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection('posts', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      collection.find({
+        'tags': tag
+      }, {
+        'name': 1,
+        'time': 1,
+        'title': 1
+      }).sort({
+        time: -1
+      }).toArray(function (err, docs) {
+        mongodb.close();
+        if (err) {
+          return callback(err);
+        }
+        callback(null, docs);
+      });
+    });
+  });
+};
+
+//返回通过标题关键字查询的所有文章信息
+Post.search = function(keyword, callback) {
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection('posts', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      var pattern = new RegExp("^.*" + keyword + ".*$", "i");
+      collection.find({
+        "title": pattern
+      }, {
+        "name": 1,
+        "title": 1,
+        "time": 1
+      }).sort({
+        time: -1
+      }).toArray(function (err, docs) {
+        mongodb.close();
+        if (err) {
+         return callback(err);
         }
         callback(null, docs);
       });

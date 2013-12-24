@@ -1,14 +1,22 @@
 <%- include header %>
 <% posts.forEach(function (post, index) { %>
   <p><h2><a href="/u/<%= post.name %>/<%= post.title %>"><%= post.title %></a></h2></p>
+  <a href="/u/<%= post.name %>"><img src="<%= post.head %>" class="img-thumbnail" alt="<%= post.name %>" onError="this.src='/images/guitar1.png'" height="48" width="48"></a>
   <p class="info">
     作者：<a href="/u/<%= post.name %>"><%= post.name %></a> |
     日期：<%= post.time.minute %>
+    标签：
+    <% post.tags.forEach(function (tag,index) { %>
+      <% if (tag) { %>
+        <a class="label label-primary" href="/tag/<%= tag %>"><%= tag %></a>
+      <% } %>
+    <% }) %>
   </p>
   <p><%- post.post %></p>
   <% if (post.image!='') { %>
     <img src="<%= post.image.path.split('public')[1] %>" height="200" width="200" />
   <% } %>
+  <p class="info">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
 <% }) %>
 <% if (posts != '' && total > 10) { %>
 	<%- include paging %>

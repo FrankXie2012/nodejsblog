@@ -6,8 +6,10 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/animate.min.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/jquery-ui-1.10.3.custom.min.css">
 	<script type="text/javascript" src="/javascripts/jquery.js"></script>
 	<script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/javascripts/jquery-ui-1.10.3.custom.js"></script>
 </head>
 <body>
 <header>
@@ -18,7 +20,9 @@
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
 	        <li class="home"><a href="/" title="主页">HOME</a></li>
-	        <li class="archive"><a href="/archive" title="存档">ARCHIVE</a></li>
+	        <li><a href="/archive" title="存档">ARCHIVE</a></li>
+	        <li><a href="/tags" title="标签">TAGS</a></li>
+	        <li><a href="/links" title="友情链接">LINKS</a></li>
 	        <% if (user) { %>
 	        	<li><a href="/post" title="发表">POST</a></li>
 	        	<li><a href="/logout" title="登出">LOGOUT</a></li>
@@ -27,6 +31,14 @@
 				<li class="reg"><a href="/reg" title="注册">REGISTER</a></li>
 			<% } %>
 		</ul>
+		<form action="search" method="GET" class="navbar-form navbar-left" role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="SEARCH" name="keyword" />
+			</div>
+			<button type="submit" class="btn btn-default">
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+		</form>
 	</div>
 </nav>
 <article>
@@ -44,3 +56,31 @@
 <% } %>
 </body>
 </html>
+
+<script type="text/javascript">
+	// $(document).ready(function() {
+	// 	$('.navbar-form input').autocomplete({
+	// 		source: function(req, res) {
+	// 			$.ajax({
+	// 				url: "http://localhost:3000/autocomplete/" + req.term,
+	// 				dataType: "jsonp",
+	// 				data: {
+	// 					term: req.term
+	// 				},
+	// 				type: "get",
+	// 				success: function(data) {
+	// 					res.($.map(data), function(item) {
+	// 						return {
+	// 							label: item.text,
+	// 							value: item.text
+	// 						};
+	// 					});
+	// 				},
+	// 				error: function(xhr) {
+	// 					alert(xhr.status + ' : ' + xhr.statusText);
+	// 				}
+	// 			});
+	// 		}
+	// 	});
+	// });
+</script>

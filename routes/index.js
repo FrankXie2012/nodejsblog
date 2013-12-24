@@ -1,8 +1,9 @@
 var crypto = require('crypto'),
     fs = require('fs'),
     User = require('../models/user.js'),
-    Post = require('../models/post.js');
-    Comment = require('../models/comment.js');
+    Post = require('../models/post.js'),
+    Comment = require('../models/comment.js'),
+    Autocomplete = require('../models/autocomplete.js');
 
 module.exports = function(app){
     app.get('/', function (req, res) {
@@ -17,7 +18,7 @@ module.exports = function(app){
           posts: posts,
           page: page,
           total: total,
-          isFirstPage: (page-1)==0,
+          isFirstPage: (page-1)===0,
           isLastPage: ((page-1)*10+posts.length)==total,
           success: req.flash('success').toString(),
           error: req.flash('error').toString()
@@ -117,8 +118,12 @@ module.exports = function(app){
 
     app.post('/post', checkLogin);
     app.post('/post', function (req, res) {
+      if (req.files.image.originalFilename === '') {
+        req.files.image = '';
+      }
       var currentUser = req.session.user,
-        post = new Post(currentUser.name, req.body.title, req.body.post, req.files.image);
+          tags = [req.body.tag1, req.body.tag2, req.body.tag3],
+          post = new Post(currentUser.name, currentUser.head, req.body.title, req.body.post, tags, req.files.image);
       post.save(function(err){
         if (err) {
           req.flash('error', err);
@@ -150,7 +155,7 @@ module.exports = function(app){
             return res.redirect('/');
           }
 
-          res.render('user', {
+          res.render('index', {
             title: user.name,
             posts: posts,
             page: page,
@@ -185,8 +190,12 @@ module.exports = function(app){
     app.post('/u/:name/:title', function (req, res) {
       var date = new Date(),
           time = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+      var md5 = crypto.createHash('md5'),
+          email_MD5 = md5.update(req.body.email.toLowerCase()).digest('hex'),
+          head = "http://www.gravatar.com/avatar/" + email_MD5 + "?s=48";
       var comment = {
         name: req.body.name,
+        head: head,
         email: req.body.email,
         website: req.body.website,
         time: time,
@@ -224,7 +233,10 @@ module.exports = function(app){
     app.post('/edit/:name/:title', checkLogin);
     app.post('/edit/:name/:title', function (req, res) {
       var currentUser = req.session.user;
-      Post.update(currentUser.name, req.params.title, req.body.post, req.files.image, function (err) {
+      if (req.files.image.originalFilename === '') {
+        req.files.image = '';
+      }
+      Post.update(currentUser.name, req.params.title, req.body.post, req.body.tags, req.files.image, function (err) {
         var url = '/u/' + req.params.name + '/' + req.params.title;
         if (err) {
           req.flash('error', err);
@@ -260,8 +272,74 @@ module.exports = function(app){
           user: req.session.user,
           success: req.flash('success').toString(),
           error: req.flash('error').toString()
-        })
+        });
       });
+    });
+
+    app.get('/tags', function (req, res) {
+      Post.getTags(function (err, posts) {
+        if (err) {
+          req.flash('error', err);
+          return res.redirect('/');
+        }
+        res.render('tags', {
+          title: 'Tags',
+          posts: posts,
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString()
+        });
+      });
+    });
+
+    app.get('/tag/:tag', function (req, res) {
+      Post.getTag(req.params.tag, function (err, posts) {
+        if (err) {
+          req.flash('error', err);
+          return res.redirect('/');
+        }
+        res.render('tag', {
+          title: 'TAG:' + req.params.tag,
+          posts: posts,
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString()
+        });
+      });
+    });
+
+    app.get('/search', function (req, res) {
+      Post.search(req.query.keyword, function (err, posts) {
+        if (err) {
+          req.flash('error', err);
+          return res.redirect('/');
+        }
+        res.render('tag', {
+          title: 'SEARCH:' + req.query.keyword,
+          posts: posts,
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString()
+        });
+      });
+    });
+
+    app.get('/links', function (req, res) {
+      res.render('links', {
+        title: 'LINKS',
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
+    });
+
+    // app.get('/autocomplete/:keyword', function (req, res) {
+    //   console.info(req.params.keyword);
+    //   Autocomplete.find(req.params.keyword);
+    // });
+
+    app.use(function (req, res) {
+      res.render("404");
     });
 
     function checkLogin(req, res, next) {
