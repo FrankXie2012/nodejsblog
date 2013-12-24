@@ -338,6 +338,28 @@ module.exports = function(app){
     //   Autocomplete.find(req.params.keyword);
     // });
 
+    app.get('/reprint/:name/:title', checkLogin);
+    app.get('/reprint/:name/:title', function (req, res) {
+      Post.edit(req.params.name, req.params.title, function (err, post) {
+        if (err) {
+          req.flash('error', err);
+          return res.redirect(back);
+        }
+        var currentUser = req.session.user,
+            reprint_from = {name: post.name, title: post.title},
+            reprint_to = {name: currentUser.name, head: currentUser.head};
+        Post.reprint(reprint_from, reprint_to, function (err, post) {
+          if (err) {
+            req.flash('err', err);
+            return res.redirect('back');
+          }
+          req.flash('success', '转载成功！');
+          var url = '/u/' + post.name + '/' + post.title;
+          res.redirect(url);
+        });
+      });
+    });
+
     app.use(function (req, res) {
       res.render("404");
     });

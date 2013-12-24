@@ -3,6 +3,26 @@
 	<span><a href="/edit/<%= post.name %>/<%= post.title %>" class="btn btn-primary">编辑</a></span>
 	<span><a href="/delete/<%= post.name %>/<%= post.title %>" class="btn btn-warning">删除</a></span>
 <% } %>
+
+<% var flag = 1 %>
+<% if (user && (user.name != post.name)) { %>
+  <% if ((post.reprint_info.reprint_from != undefined) && (user.name == post.reprint_info.reprint_from.name)) { %>
+    <% flag = 0 %>
+  <% } %>
+  <% if ((post.reprint_info.reprint_to != undefined)) { %>
+    <% post.reprint_info.reprint_to.forEach(function (reprint_to, index) { %>
+      <% if (user.name == reprint_to.name) { %>
+        <% flag = 0 %>
+      <% } %>
+    <% }) %>
+  <% } %>
+<% } else { %>
+  <% flag = 0 %>
+<% } %>
+<% if (flag) { %>
+  <span><a class="edit" href="/reprint/<%= post.name %>/<%= post.title %>">转载</a></span>
+<% } %>
+
 <p class="info">
   作者：<a href="/u/<%= post.name %>"><%= post.name %></a> |
   日期：<%= post.time.minute %>
@@ -12,6 +32,9 @@
         <a href="/tag/<%= tag %>" class="label label-primary"><%= tag %></a>
       <% } %>
     <% }) %>
+  <% if (post.reprint_info.reprint_from) { %>
+    <br><a href="/u/<%= post.reprint_info.reprint_from.name %>/<%= post.reprint_info.reprint_from.title %>">原文链接</a>
+  <% } %>
 </p>
 <p><%- post.post %></p>
 <% if (post.image != '') { %>

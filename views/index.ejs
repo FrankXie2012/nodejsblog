@@ -16,7 +16,16 @@
   <% if (post.image!='') { %>
     <img src="<%= post.image.path.split('public')[1] %>" height="200" width="200" />
   <% } %>
-  <p class="info">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>
+  <p class="info">
+    阅读：<%= post.pv %>&nbsp;|&nbsp;
+    评论：<%= post.comments.length %>&nbsp;|&nbsp;
+    转载：
+    <% if (post.reprint_info.reprint_to) { %>
+      <%= post.reprint_info.reprint_to.length %>
+    <% } else { %>
+      <%= 0 %>
+    <% } %>
+  </p>
 <% }) %>
 <% if (posts != '' && total > 10) { %>
 	<%- include paging %>
