@@ -2,8 +2,8 @@ var crypto = require('crypto'),
     fs = require('fs'),
     User = require('../models/user.js'),
     Post = require('../models/post.js'),
-    Comment = require('../models/comment.js'),
-    Autocomplete = require('../models/autocomplete.js');
+    Comment = require('../models/comment.js');
+    // Autocomplete = require('../models/autocomplete.js');
 
 module.exports = function(app){
     app.get('/', function (req, res) {
