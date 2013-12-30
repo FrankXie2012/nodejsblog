@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="/javascripts/jquery-ui-1.10.3.custom.js"></script>
 	<script type="text/javascript" src="/kindeditor/kindeditor-min.js"></script>
 	<script type="text/javascript" src="/kindeditor/lang/zh_CN.js"></script>
+	<script type="text/javascript" src="/javascripts/base.js"></script>
 	<script type="text/javascript">
 		var editor;
 		KindEditor.ready(function(K) {
@@ -74,34 +75,50 @@
 </head>
 <body>
 <header>
-	<h1><span class="label label-info header animated tada"><%= title %></span></h1>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<a class="navbar-brand" href="/">BLOG</a>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li></li>
+				<li class="home"><a href="/" title="主页"><span class="glyphicon glyphicon-home"></span>&nbsp;HOME</a></li>
+				<li><a href="/archive" title="存档"><span class="glyphicon glyphicon-hdd"></span>&nbsp;ARCHIVE</a></li>
+				<li><a href="/tags" title="标签"><span class="glyphicon glyphicon-tag"></span>&nbsp;TAGS</a></li>
+				<li><a href="/links" title="友情链接"><span class="glyphicon glyphicon-link"></span>&nbsp;LINKS</a></li>
+				<% if (user) { %>
+					<li><a href="/post" title="发表"><span class="glyphicon glyphicon-edit"></span>&nbsp;POST</a></li>
+				<% } %>
+				<li>
+					<form action="search" method="GET" class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="SEARCH" name="keyword" />
+						</div>
+						<button type="submit" class="btn btn-default">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</form>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav pull-right">
+				<% if (user) { %>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<%= user.head %>" class="img-circle" alt="<%= user.name %>" onError="this.src='/images/guitar1.png'" height="20" width="20" /> <%= user.name %> <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+							<li class="divider"></li>
+							<li><a href="#">One more separated link</a></li>
+						</ul>
+					</li>
+					<li><a href="/logout" title="登出"><span class="glyphicon glyphicon-log-out"></span>&nbsp;LOGOUT</a></li>
+				<% } else { %>
+					<li class="reg"><a href="/reg" title="注册"><span class="glyphicon glyphicon-user"></span>&nbsp;REGISTER</a></li>
+					<li class="login"><a href="/login" title="登录"><span class="glyphicon glyphicon-log-in"></span>&nbsp;LOGIN</a></li>
+				<% } %>
+			</ul>
+		</div>
+	</nav>
 </header>
-
-<nav class="navbar navbar-default" role="navigation">
-	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<ul class="nav navbar-nav">
-	        <li class="home"><a href="/" title="主页">HOME</a></li>
-	        <li><a href="/archive" title="存档">ARCHIVE</a></li>
-	        <li><a href="/tags" title="标签">TAGS</a></li>
-	        <li><a href="/links" title="友情链接">LINKS</a></li>
-	        <% if (user) { %>
-	        	<li><a href="/post" title="发表">POST</a></li>
-	        	<li><a href="/logout" title="登出">LOGOUT</a></li>
-	        <% } else { %>
-				<li class="login"><a href="/login" title="登录">LOGIN</a></li>
-				<li class="reg"><a href="/reg" title="注册">REGISTER</a></li>
-			<% } %>
-		</ul>
-		<form action="search" method="GET" class="navbar-form navbar-left" role="search">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="SEARCH" name="keyword" />
-			</div>
-			<button type="submit" class="btn btn-default">
-				<span class="glyphicon glyphicon-search"></span>
-			</button>
-		</form>
-	</div>
-</nav>
 <article>
 <% if (success) { %>
 	<div class="alert alert-success alert-dismissable">

@@ -39,13 +39,7 @@ module.exports = function(app){
     app.post('/reg', checkNotLogin);
     app.post('/reg', function (req, res) {
       var name = req.body.name,
-          password = req.body.password,
-          password_re = req.body['password-repeat'];
-      //检验用户两次输入的密码是否一致
-      if (password_re != password) {
-        req.flash('error', '两次输入的密码不一致!');
-        return res.redirect('/reg');//返回注册页
-      }
+          password = req.body.password;
       //生成密码的 md5 值
       var md5 = crypto.createHash('md5');
       var pwd = md5.update(req.body.password).digest('hex');
@@ -120,6 +114,10 @@ module.exports = function(app){
     app.post('/post', function (req, res) {
       if (req.files.image.originalFilename === '') {
         req.files.image = '';
+      }
+      if (req.body.post == '') {
+        req.flash('error', '正文不能为空！');
+        return res.redirect('/post');
       }
       var currentUser = req.session.user,
           tags = [req.body.tag1, req.body.tag2, req.body.tag3],

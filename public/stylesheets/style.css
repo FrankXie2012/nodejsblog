@@ -1,6 +1,7 @@
 body {
   padding: 50px;
-  font: 14px "Alex Brush", Helvetica, Arial, sans-serif;
+  font: 14px;
+  font-family: "Comic Sans MS", Helvetica, Arial, sans-serif !important;
 }
 
 header{
@@ -10,13 +11,6 @@ header{
 
 a {
   color: #00B7FF;
-}
-
-.header{
-	text-align: center;
-	font-weight: bold;
-	font-family: 'Alex Brush', cursive;
-	color: HSLA(0.48, 83.89%, 70.78%, 1);
 }
 
 .paging{
