@@ -1,7 +1,21 @@
+html, body{
+	height: 100%;
+}
+
 body {
-  padding: 50px;
-  font: 14px;
-  font-family: "Comic Sans MS", Helvetica, Arial, sans-serif !important;
+	padding: 40px;
+	padding-bottom: 0;
+	font: 14px;
+	font-family: "Comic Sans MS", Helvetica, Arial, sans-serif !important;
+}
+
+.wrap{
+	min-height: 100%;
+	position: relative;
+}
+
+article{
+	padding-bottom: 79px;
 }
 
 header{
@@ -9,11 +23,93 @@ header{
 	text-align: center;
 }
 
+footer{
+	position: absolute;
+    bottom: 0;
+	margin-top: -79px;
+	height: 79px;
+	width: 100%;
+	clear: both;
+}
+
 a {
   color: #00B7FF;
 }
 
+.info{
+	line-height: 30px;
+	vertical-align: middle;
+}
+
 .paging{
-	margin-top: 30px;
 	text-align: center;
+}
+
+.posts{
+	width: 100%;
+}
+
+.single-post{
+	padding: 0 15px;
+	margin: 3px;
+	background-color: #eef;
+	width: 32.5%;
+	float: left;
+	border: 1px solid #ddf;
+	max-height: 400px;
+	overflow: hidden;
+}
+
+.dragging{
+	padding: 0 15px;
+	margin: 3px;
+	background-color: #fca;
+	opacity: 0.7;
+	width: 32.5%;
+	float: left;
+	display: inline;
+	border: 1px solid #428bca;
+}
+
+.post-sortable-placeholder{
+	background-color: #ccc;
+}
+
+.single-post .close, .dragging .close{
+	margin-right: 5px;
+}
+
+.single-post:hover{
+	border: 1px solid #428bca;
+	background-color: #fff;
+	-webkit-transition: background-color .5s linear;
+	transition: background-color .5s linear;
+}
+
+.reg-form{
+	margin-top: 30%;
+	padding: 15px;
+	border: 2px solid #428bca;
+	width: 100%;
+	border-radius: 30px;
+	background-color: #eef;
+	opacity: 0.8;
+}
+
+.reg-form input, .reg-form .form-submit{
+	text-align: center;
+}
+
+.reg-divider{
+	height: 95%;
+	position: absolute;
+	top: 25px;
+	border: 1px solid #428bca;
+	left: 34%;
+}
+
+/*OVERRIDE BOOTSTRAP*/
+ul.navbar-nav li.active a{
+	background-color: #428bca !important;
+	color: white !important;
 }

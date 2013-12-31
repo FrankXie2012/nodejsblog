@@ -1,3 +1,9 @@
-</article>
+	</article>
+	<footer>
+		<% if (typeof posts !== 'undefined' && typeof total !== 'undefined' && posts != '' && total > 10) { %>
+		  <%- include paging %>
+		<% } %>
+	</footer>
+</div>
 </body>
 </html>

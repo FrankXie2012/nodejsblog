@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	function common_validate(obj, condition1) {
 		if (condition1) {
+			obj.val('');
 			obj.attr('placeholder', obj.data('warning')).removeClass('okay');
 			obj.parent().addClass('has-error');
 		} else {
@@ -18,27 +19,12 @@ $(document).ready(function() {
 		if (id == 'name' || id == 'title') {
 			common_validate($(this), $(this).val()=='');
 		} else if (id == 'password') {
-			if ($(this).val().length < 6) {
-				$(this).parent().after('<h3 style="margin: 3px" class="col-sm-2"><span class="label label-danger">密码长度应大于6位！</span></h3>');
-				$(this).removeClass('okay');
-			} else {
-				$(this).addClass('okay');
-			}
+			common_validate($(this), $(this).val().length < 6);
 		} else if (id == 'repeat_psw') {
 			var $password = $('#password').val();
-			if ($(this).val() == $password) {
-				$(this).addClass('okay');
-			} else{
-				$(this).parent().after('<h3 style="margin: 3px" class="col-sm-2"><span class="label label-danger">两次输入密码不一致！</span></h3>');
-				$(this).removeClass('okay');
-			}
+			common_validate($(this), $(this).val() !== $password);
 		} else if (id == 'email') {
-			if (!validateEmail($(this).val())) {
-				$(this).parent().after('<h3 style="margin: 3px" class="col-sm-2"><span class="label label-danger">请输入有效邮箱！</span></h3>');
-				$(this).removeClass('okay');
-			} else {
-				$(this).addClass('okay');
-			}
+			common_validate($(this), !validateEmail($(this).val()));
 		}
 	});
 
@@ -70,5 +56,42 @@ $(document).ready(function() {
 				$(this).parent('li').addClass('active animated tada');
 			}
 		});
+		var $container = $('#posts');
+		$container.masonry({
+			itemSelector: '.single-post',
+			isResizable: true,
+			columnWidth: 1
+		});
+		$container.sortable({
+			distance: 12,
+			items: '.single-post',
+			forcePlaceholderSize: true,
+			placeholder: 'post-sortable-placeholder single-post',
+	        tolerance: 'pointer',
+			start: function (e, ui) {
+				console.info(ui.item.parent());
+				ui.item.addClass('dragging').removeClass('single-post');
+				ui.item.parent().masonry('destroy').masonry();
+			},
+			change: function (e, ui) {
+				ui.item.parent().masonry('destroy').masonry();
+			},
+			stop: function (e, ui) {
+				ui.item.addClass('single-post').removeClass('dragging');
+				ui.item.parent().masonry('destroy').masonry();
+			}
+		});
+	});
+
+	$('.single-post .close').click(function(){
+		var $container = $('#posts');
+		$container.masonry('remove', $(this).parents('.single-post'));
+		$container.masonry();
+	})
+
+	$('.nav li').hover(function(){
+		$(this).addClass('animated swing');
+	}, function(){
+		$(this).removeClass('animated swing');
 	});
 });
