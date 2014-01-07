@@ -1,37 +1,43 @@
 <%- include header %>
 <div class="row reg-row">
-	<div class="col-md-4">
-		<form method="post" class="form-horizontal reg-form" role="form">
+	<div class="col-md-3">
+		<form method="post" class="form-horizontal auth-form container" role="form">
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
+				<div class="col-sm-offset-1 col-sm-10">
 					<input type="text" class="form-control validate" name="name" id="name" placeholder="USERNAME" data-warning="用户名不能为空！" data-placeholder="USERNAME" />
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
+				<div class="col-sm-offset-1 col-sm-10">
 					<input type="password" class="form-control validate" name="password" id="password" placeholder="PASSWORD" data-warning="密码不能小于6位！" data-placeholder="PASSWORD" />
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
+				<div class="col-sm-offset-1 col-sm-10">
 					<input type="password" class="form-control validate" name="password-repeat" id="repeat_psw" placeholder="CONFIRM PASSWORD" data-warning="两次输入密码不一致！" data-placeholder="CONFIRM PASSWORD" />
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
+				<div class="col-sm-offset-1 col-sm-10">
 					<input type="text" class="form-control validate" name="email" id="email" placeholder="EMAIL" data-warning="请输入有效邮箱" data-placeholder="EMAIL" />
 				</div>
 			</div>
 			<div class="form-group">
-		    	<div class="col-sm-offset-2 col-sm-8 form-submit">
-		      		<button type="submit" class="btn btn-primary disabled validate" disabled="diabled"><span class="glyphicon glyphicon-off"></span>&nbsp;注册</button>
-		    	</div>
-		    </div>
+				<div class="col-sm-offset-1 col-sm-10 form-submit">
+					<button type="submit" class="btn btn-primary disabled validate" disabled="diabled"><span class="glyphicon glyphicon-star"></span>&nbsp;SIGN UP</button>
+				</div>
+			</div>
 		</form>
-	</div>
-	<div class="col-md-8">
-
+		<br><br>
+		<div class="container"><span class="fontWhite f16px">Already blogging? Sign in.</span><br><br><a href="/login"><button class="btn btn-warning pull-right"><span class="glyphicon glyphicon-star-empty"></span>&nbsp;SIGN IN</button></a></div>
 	</div>
 	<div class="reg-divider"></div>
+	<div class="col-md-offset-1 col-md-8">
+		<div class="video-div container">
+			<video id="video" width="725" height="406" controls="controls" autoplay="autoplay" poster="http://video-js.zencoder.com/oceans-clip.png">
+				<source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+			</video>
+		</div>
+	</div>
 </div>
 <%- include footer %>

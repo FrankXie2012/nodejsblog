@@ -1,21 +1,28 @@
 <%- include header %>
-<form method="post" class="form-horizontal" role="form">
-	<div class="form-group">
-		<label for="name" class="col-sm-2 control-label">用户名：</label>
-		<div class="col-sm-3">
-			<input type="text" class="form-control" id="name" name="name" placeholder="请输入用户名">
-		</div>
+<div class="row reg-row">
+	<div class="col-md-3">
+		<form method="post" class="form-horizontal auth-form container" role="form">
+			<div class="form-group">
+				<div class="col-sm-offset-1 col-sm-10">
+					<input type="text" class="form-control" id="name" name="name" placeholder="USERNAME">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-1 col-sm-10">
+					<input type="password" class="form-control" id="password" name="password" placeholder="PASSWORD">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-1 col-sm-10">
+					<button type="submit" class="btn btn-primary validate"><span class="glyphicon glyphicon-star-empty"></span>&nbsp;SIGN IN</button>
+				</div>
+			</div>
+		</form>
+		<br><br>
+		<div class="container"><span class="fontWhite f16px to-reg">No account yet?</span><a href="/reg"><button class="btn btn-warning pull-right"><span class="glyphicon glyphicon-star"></span>&nbsp;SIGN UP</button></a></div>
 	</div>
-	<div class="form-group">
-		<label for="password" class="col-sm-2 control-label">密码：</label>
-		<div class="col-sm-3">
-			<input type="password" class="form-control" id="password" name="password" placeholder="请输入用户密码">
-		</div>
+	<div class="reg-divider"></div>
+	<div class="col-md-offset-1 col-md-8">
 	</div>
-	<div class="form-group">
-    	<div class="col-sm-offset-2 col-sm-10">
-      		<button type="submit" class="btn btn-info">登录</button>
-    	</div>
-    </div>
-</form>
+</div>
 <%- include footer %>

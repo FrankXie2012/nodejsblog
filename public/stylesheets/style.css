@@ -7,7 +7,14 @@ body {
 	padding-bottom: 0;
 	font: 14px;
 	font-family: "Comic Sans MS", Helvetica, Arial, sans-serif !important;
+	background: url('../images/wordpress.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	background-size: cover;
 }
+
+.fontWhite{	color: white; }
+.f16px{ font-size: 16px; }
+.fB{ font-weight: bold; }
 
 .wrap{
 	min-height: 100%;
@@ -86,18 +93,27 @@ a {
 	transition: background-color .5s linear;
 }
 
-.reg-form{
-	margin-top: 30%;
+.container{
 	padding: 15px;
 	border: 2px solid #428bca;
-	width: 100%;
-	border-radius: 30px;
-	background-color: #eef;
-	opacity: 0.8;
+	border-radius: 20px;
+	background-color: rgba(0,0,0,0.5);
+	width: auto;
 }
 
-.reg-form input, .reg-form .form-submit{
+.auth-form{
+	margin-top: 30%;
+	width: 100%;
+}
+
+.auth-form input, .auth-form .form-submit{
 	text-align: center;
+}
+
+.video-div{
+	margin-left: 0;
+	margin-top: 10%;
+	width: 755px;
 }
 
 .reg-divider{
@@ -105,11 +121,56 @@ a {
 	position: absolute;
 	top: 25px;
 	border: 1px solid #428bca;
-	left: 34%;
+	left: 26%;
+}
+
+.post-form{
+	margin-top: 15px;
+	padding: 15px;
+	border: 1px solid #428bca;
+	border-radius: 20px;
+	background-color: rgba(0,0,0,0.5);
+}
+
+h2.header{
+	background-color: #666;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
+    font-family: "Comic Sans MS", Helvetica, Arial, sans-serif !important;
+}
+
+.ke-edit{
+	height: 200px;
+}
+
+button.validate{
+	width: 100%;
+}
+
+.to-reg{
+	line-height: 30px;
 }
 
 /*OVERRIDE BOOTSTRAP*/
 ul.navbar-nav li.active a{
 	background-color: #428bca !important;
 	color: white !important;
+}
+
+ul.navbar-nav li a:hover{
+	color: white !important;
+	-webkit-transition: color .5s linear;
+	transition: color .5s linear;
+}
+
+.navbar{
+	background-color: rgba(0,0,0,0.5);
+}
+
+.navbar-brand{
+	font-size: 23px;
+	font-weight: bold;
 }

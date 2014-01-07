@@ -90,8 +90,8 @@ $(document).ready(function() {
 	})
 
 	$('.nav li').hover(function(){
-		$(this).addClass('animated swing');
+		$(this).addClass('animated pulse');
 	}, function(){
-		$(this).removeClass('animated swing');
+		$(this).removeClass('animated pulse');
 	});
 });

@@ -1,14 +1,15 @@
 <%- include header %>
-<form method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+<h2 class="header text-center">Create Post</h2>
+<form method="post" class="form-horizontal post-form" role="form" enctype="multipart/form-data">
 	<div class="form-group">
-		<label for="title" class="col-sm-2 control-label">标题：</label>
-		<div class="col-sm-10">
+		<label for="title" class="col-sm-1 control-label">标题：</label>
+		<div class="col-sm-11">
 			<input type="text" class="form-control validate" id="title" name="title" placeholder="请输入标题" data-warning="标题不能为空！" data-placeholder="请输入标题" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="label1" class="col-sm-2 control-label">标签：</label>
-		<div class="col-sm-10 row-fluid">
+		<label for="label1" class="col-sm-1 control-label">标签：</label>
+		<div class="col-sm-11 row-fluid">
 			<div class="col-sm-4">
 				<input type="text" class="form-control" id="label1" name="tag1" placeholder="标签一" />
 			</div>
@@ -21,19 +22,19 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="post" class="col-sm-2 control-label">正文：</label>
-		<div class="col-sm-10">
+		<label for="post" class="col-sm-1 control-label">正文：</label>
+		<div class="col-sm-11">
 			<textarea class="form-control" id="kindeditor" name="post" placeholder="请输入正文" rows="20"></textarea>
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div class="col-sm-offset-1 col-sm-11">
 			<input type="file" name="image" />
 		</div>
 	</div>
 	<div class="form-group">
-    	<div class="col-sm-offset-2 col-sm-10">
-      		<button type="submit" class="btn btn-info disabled validate" disabled="disabled">提交</button>
+    	<div class="col-sm-12">
+      		<button type="submit" class="btn btn-primary disabled validate" disabled="disabled"><span class="glyphicon glyphicon-send"></span>&nbsp;提交</button>
     	</div>
     </div>
 </form>
