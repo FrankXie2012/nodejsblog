@@ -1,34 +1,32 @@
 <%- include header %>
-<h2 class="header text-center">Create Post</h2>
+<h2 class="header">Create Post</h2>
 <form method="post" class="form-horizontal post-form" role="form" enctype="multipart/form-data">
 	<div class="form-group">
-		<label for="title" class="col-sm-1 control-label">标题：</label>
-		<div class="col-sm-11">
-			<input type="text" class="form-control validate" id="title" name="title" placeholder="请输入标题" data-warning="标题不能为空！" data-placeholder="请输入标题" />
+		<div class="col-sm-12">
+			<input type="text" class="form-control validate" id="title" name="title" placeholder="TITLE" data-warning="标题不能为空！" data-placeholder="TITLE" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="label1" class="col-sm-1 control-label">标签：</label>
-		<div class="col-sm-11 row-fluid">
+		<div class="col-sm-12 row-fluid">
 			<div class="col-sm-4">
-				<input type="text" class="form-control" id="label1" name="tag1" placeholder="标签一" />
+				<input type="text" class="form-control" id="label1" name="tag1" placeholder="TAG1" />
 			</div>
 			<div class="col-sm-4">
-				<input type="text" class="form-control" id="label2" name="tag2" placeholder="标签二" />
+				<input type="text" class="form-control" id="label2" name="tag2" placeholder="TAG2" />
 			</div>
 			<div class="col-sm-4">
-				<input type="text" class="form-control" id="label3" name="tag3" placeholder="标签三" />
+				<input type="text" class="form-control" id="label3" name="tag3" placeholder="TAG3" />
 			</div>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="post" class="col-sm-1 control-label">正文：</label>
-		<div class="col-sm-11">
+		<div class="col-sm-12">
 			<textarea class="form-control" id="kindeditor" name="post" placeholder="请输入正文" rows="20"></textarea>
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-offset-1 col-sm-11">
+		<div class="col-sm-12">
+			<label class="label label-primary">上传图片：</label>
 			<input type="file" name="image" />
 		</div>
 	</div>

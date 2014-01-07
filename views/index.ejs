@@ -1,4 +1,15 @@
 <%- include header %>
+<h2>
+  <div class="pull-right btn-group switch-view" data-toggle="buttons">
+    <label class="btn btn-primary grid-view active">
+      <input type="radio"> <span class="glyphicon glyphicon-th-large"></span>
+    </label>
+    <label class="btn btn-primary list-view">
+      <input type="radio"> <span class="glyphicon glyphicon-align-justify"></span>
+    </label>
+  </div>
+  <span class="fontWhite f30px">Freshly pressed</h2>
+</h2>
 <div class="posts js-masonry" id="posts">
   <% posts.forEach(function (post, index) { %>
     <div class="single-post">
