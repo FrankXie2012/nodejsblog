@@ -120,8 +120,13 @@ module.exports = function(app){
         return res.redirect('/post');
       }
       var currentUser = req.session.user,
-          tags = [req.body.tag1, req.body.tag2, req.body.tag3],
-          post = new Post(currentUser.name, currentUser.head, req.body.title, req.body.post, tags, req.files.image);
+        tags = [req.body.tag1, req.body.tag2, req.body.tag3],
+        post = new Post(currentUser.name, currentUser.head, req.body.title, req.body.post, tags, req.files.image);
+      tags.forEach(function (tag,index) {
+        if (tag == '') {
+          tags.splice(index, 1);
+        }
+      });
       post.save(function(err){
         if (err) {
           req.flash('error', err);

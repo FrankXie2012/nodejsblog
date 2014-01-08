@@ -87,6 +87,16 @@ $(document).ready(function() {
 		// 		ui.item.parent().masonry('destroy').masonry();
 		// 	}
 		// });
+
+		$('.single-post').each(function(){
+			if ($(this).height() > 400) {
+				var title_height = $(this).children('.single-post-title').height();
+				$(this).height(400);
+				$(this).children('.inner-container').css({'padding-right': '18px', 'box-sizing': 'content-box', '-webkit-box-sizing': 'content-box'});
+				$(this).css({'padding-top': title_height+15});
+				$(this).children('.single-post-title').css({'margin-top': -title_height});
+			}
+		})
 	});
 
 	$('.single-post .close').click(function(){

@@ -34,14 +34,17 @@ app.use(express.session({
 }));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+app.locals({
+	timeago: require('timeago')
+});
+
+
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// app.get('/', routes.index);
-// app.get('/users', user.list);
 routes(app);
 
 http.createServer(app).listen(app.get('port'), function(){
