@@ -112,10 +112,7 @@ module.exports = function(app){
 
     app.post('/post', checkLogin);
     app.post('/post', function (req, res) {
-      if (req.files.image.originalFilename === '') {
-        req.files.image = '';
-      }
-      if (req.body.post == '') {
+      if (!req.body.post) {
         req.flash('error', '正文不能为空！');
         return res.redirect('/post');
       }
@@ -123,7 +120,7 @@ module.exports = function(app){
         tags = [req.body.tag1, req.body.tag2, req.body.tag3],
         post = new Post(currentUser.name, currentUser.head, req.body.title, req.body.post, tags, req.files.image);
       tags.forEach(function (tag,index) {
-        if (tag == '') {
+        if (!tag) {
           tags.splice(index, 1);
         }
       });
@@ -236,9 +233,6 @@ module.exports = function(app){
     app.post('/edit/:name/:title', checkLogin);
     app.post('/edit/:name/:title', function (req, res) {
       var currentUser = req.session.user;
-      if (req.files.image.originalFilename === '') {
-        req.files.image = '';
-      }
       Post.update(currentUser.name, req.params.title, req.body.post, req.body.tags, req.files.image, function (err) {
         var url = '/u/' + req.params.name + '/' + req.params.title;
         if (err) {

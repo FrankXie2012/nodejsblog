@@ -14,7 +14,7 @@ body {
 
 .fontWhite{	color: white; }
 .f16px{ font-size: 16px; }
-.f30px{ font-size: 30px; }
+.f40px{ font-size: 40px; }
 .fB{ font-weight: bold; }
 
 .wrap{
@@ -200,12 +200,6 @@ input[type='file']{
 	background-color: rgba(0,0,0,0.5);
 }
 
-h2.header{
-	font-weight: bold;
-	color: white;
-	font-family: "Comic Sans MS" !important;
-}
-
 .ke-edit{
 	height: 200px;
 }
@@ -243,6 +237,10 @@ ul.navbar-nav li a:hover{
 .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus, .dropdown-menu>li>a, .dropdown-menu {
 	color: #999;
 	background-color: rgba(0,0,0,0.5) !important;
+}
+
+.dropdown-menu li{
+	border: 1px solid #428bca;
 }
 
 .alert{

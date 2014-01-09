@@ -37,7 +37,7 @@
   <% } %>
 </p>
 <p><%- post.post %></p>
-<% if (post.image != '') { %>
+<% if (post.image) { %>
 	<p><img src="<%= post.image.path.split('public')[1] %>"></p>
 <% }; %>
 <p class="info">阅读：<%= post.pv %> | 评论：<%= post.comments.length %></p>

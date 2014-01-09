@@ -8,7 +8,8 @@
       <input type="radio"> <span class="glyphicon glyphicon-align-justify"></span>
     </label>
   </div>
-  <span class="fontWhite f30px">Freshly pressed</h2>
+  <br>
+  <span class="fontWhite f40px">Freshly pressed</h2>
 </h2>
 <div class="posts js-masonry" id="posts">
   <% posts.forEach(function (post, index) { %>
@@ -17,7 +18,7 @@
         <a href="/u/<%= post.name %>/<%= post.title %>"><%= post.title %></a>
         <div class="created-time pull-right"><%- timeago(post.time.minute) %></div>
       </h2>
-      <div class="inner-container">
+      <div class="inner-container inside">
   <!--         <button type="button" class="close" aria-hidden="true">&times;</button> -->
         <div class="info">
           <a href="/u/<%= post.name %>"><img src="<%= post.head %>" class="img-thumbnail" alt="<%= post.name %>" onError="this.src='/images/guitar1.png'" height="30" width="30"></a><a href="/u/<%= post.name %>">&nbsp;<%= post.name %></a>
@@ -31,7 +32,7 @@
           <% } %>
         </div>
         <p><%- post.post %></p>
-        <% if (post.image!='') { %>
+        <% if (post.image) { %>
           <img src="<%= post.image.path.split('public')[1] %>" height="200" width="200" />
         <% } %>
         <p class="info">

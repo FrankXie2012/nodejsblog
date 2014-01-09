@@ -56,6 +56,13 @@ $(document).ready(function() {
 		}
 	});
 
+	$('button.validate').click(function(){
+		if (!$("input[name='image']").val()) {
+			$("input[name='image']").attr('disabled', 'disabled');
+			console.info('damn');
+		}
+	});
+
 // Masonry
 	$(function(){
 		$('ul.navbar-nav li a').each(function(){
@@ -88,22 +95,26 @@ $(document).ready(function() {
 		// 	}
 		// });
 
+		limit_post_height();
+	});
+
+	function limit_post_height() {
 		$('.single-post').each(function(){
 			if ($(this).height() > 400) {
-				var title_height = $(this).children('.single-post-title').height();
-				$(this).height(400);
 				$(this).children('.inner-container').css({'padding-right': '18px', 'box-sizing': 'content-box', '-webkit-box-sizing': 'content-box'});
-				$(this).css({'padding-top': title_height+15});
+				$(this).children('.inner-container').height(300);
+				var title_height = $(this).children('.single-post-title').height();
+				$(this).css({'padding-top': title_height+15, 'padding-bottom': 15});
 				$(this).children('.single-post-title').css({'margin-top': -title_height});
 			}
-		})
-	});
+		});
+	}
 
 	$('.single-post .close').click(function(){
 		var $container = $('#posts');
 		$container.masonry('remove', $(this).parents('.single-post'));
 		$container.masonry();
-	})
+	});
 
 // Navbar
 	$('.nav li.animate').hover(function(){
@@ -114,7 +125,8 @@ $(document).ready(function() {
 
 // Change view type
 	$('.switch-view .list-view').click(function(){
-		$('.single-post').addClass('single-post-list').removeClass('single-post');
+		$('.single-post').addClass('single-post-list').removeClass('single-post').css({'height': 'auto'});
+		$('.inside').removeClass('inner-container').css({'height': 'auto'});
 		var $container = $('#posts');
 		$container.masonry({
 			itemSelector: '.single-post'
@@ -124,6 +136,8 @@ $(document).ready(function() {
 
 	$('.switch-view .grid-view').click(function(){
 		$('.single-post-list').addClass('single-post').removeClass('single-post-list');
+		$('.inside').addClass('inner-container');
+		limit_post_height();
 		var $container = $('#posts');
 		$container.masonry({
 			itemSelector: '.single-post'
