@@ -1,6 +1,6 @@
 <%- include header %>
 <% if (user && (user.name == post.name)) { %>
-	<span><a href="/edit/<%= post.name %>/<%= post.title %>" class="btn btn-primary">编辑</a></span>
+  <span><a href="/edit/<%= post.name %>/<%= post.title %>" class="btn btn-primary">编辑</a></span>
 	<span><a href="/delete/<%= post.name %>/<%= post.title %>" class="btn btn-warning">删除</a></span>
 <% } %>
 

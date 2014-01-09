@@ -176,7 +176,6 @@ module.exports = function(app){
           req.flash('error', err);
           return res.redirect('/');
         }
-
         res.render('article', {
           title: req.params.title,
           user: req.session.user,

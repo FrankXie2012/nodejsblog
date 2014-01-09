@@ -1,6 +1,6 @@
 	</article>
 	<footer>
-		<% if (posts && total && total > 10) { %>
+		<% if (typeof posts != 'undefined' && typeof total != 'undefined' && posts != '' && total > 10) { %>
 		  <%- include paging %>
 		<% } %>
 	</footer>
