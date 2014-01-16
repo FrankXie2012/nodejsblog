@@ -151,6 +151,10 @@ input[type='file']{
 	background-color: #ccc;
 }
 
+.show-post{
+	padding-top: 20px;
+}
+
 .single-post .close, .dragging .close{
 	margin-right: 5px;
 }
@@ -159,6 +163,21 @@ input[type='file']{
 	margin: 15px;
 	font-size: 16px;
 	color: #aaa;
+}
+
+.comment{
+	width: 70% !important;
+	padding: 0 50px !important;
+	margin-bottom: 30px;
+	color: white;
+}
+
+.comment input{
+	text-align: center;
+}
+
+.comment textarea{
+	width: 100%;
 }
 
 .container{

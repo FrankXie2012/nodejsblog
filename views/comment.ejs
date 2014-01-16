@@ -1,24 +1,53 @@
 <br>
-<% post.comments.forEach(function (comment, index) { %>
-	<p>
-		<img src="<%= comment.head %>" class="img-thumbnail" alt="<%= comment.name %>" onError="this.src='/images/guitar1.png'" height="48" width="48" />
-		<a href="<%= comment.website %>"><%= comment.name %></a>
-		<span class="info"> 回复于 <%= comment.time %></span>
-	</p>
-	<p><%- comment.content %></p>
-<% }) %>
-<br>
-<br>
-<form method="post">
-<% if (user) { %>
-	姓名：<input type="text" name="name" value="<%= user.name %>" /><br>
-	邮箱：<input type="text" name="email" value="<%= user.email %>" /><br>
-	网址：<input type="text" name="website" value="/u/<%= user.name %>" /><br>
-<% } else { %>
-    姓名：<input type="text" name="name" /><br />
-    邮箱：<input type="text" name="email" /><br />
-    网址：<input type="text" name="website" value="http://" /><br />
+<% if (post.comments!='') { %>
+	<div class="container comment">
+		<h2 class="single-post-title">Latest Comments</h2>
+		<div class="inside">
+			<% post.comments.forEach(function (comment, index) { %>
+				<p>
+					<img src="<%= comment.head %>" class="img-thumbnail" alt="<%= comment.name %>" onError="this.src='/images/guitar1.png'" height="48" width="48" />
+					<a href="<%= comment.website %>"><%= comment.name %></a>
+					<span class="info"> 回复于 <%= comment.time %></span>
+				</p>
+				<p><%- comment.content %></p>
+				<br>
+			<% }) %>
+			<br>
+		</div>
+	</div>
 <% } %>
-	<textarea name="content" id="kindeditor" rows="5" cols="80"></textarea><br>
-	<input type="submit" value="留言" />
-</form>
+<div class="container comment">
+	<h2 class="single-post-title">Create Comment</h2>
+	<div class="inside">
+		<form method="post" class="form-horizontal" role="form">
+		<% if (user) { %>
+			<div class="form-group">
+				<input type="text" class="form-control validate" name="name" id="name" placeholder="NAME" data-warning="请输入姓名！" data-placeholder="NAME" value="<%= user.name %>" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control validate" name="email" id="email" placeholder="EMAIL" data-warning="请输入邮箱！" data-placeholder="EMAIL" value="<%= user.email %>" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control validate" name="website" id="website" placeholder="WEBSITE" data-warning="请输入网址！" data-placeholder="WEBSITE" value="/u/<%= user.name %>" />
+			</div>
+		<% } else { %>
+			<div class="form-group">
+				<input type="text" class="form-control validate" name="name" id="name" placeholder="NAME" data-warning="请输入姓名！" data-placeholder="NAME" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control validate" name="email" id="email" placeholder="EMAIL" data-warning="请输入邮箱！" data-placeholder="EMAIL" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control validate" name="website" id="website" placeholder="WEBSITE" data-warning="请输入网址！" data-placeholder="WEBSITE" value="http://" />
+			</div>
+		<% } %>
+			<div class="form-group">
+				<textarea name="content" id="kindeditor" rows="5"></textarea><br>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary disabled validate" disabled="diabled"><span class="glyphicon glyphicon-star"></span>&nbsp;COMMENT</button>
+			</div>
+		</form>
+	</div>
+</div>
+

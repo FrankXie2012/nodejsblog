@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 	$('.validate').focusout(function(){
 		var id = $(this).attr('id');
-		if (id == 'name' || id == 'title') {
+		if (id == 'name' || id == 'title' || id == 'website') {
 			common_validate($(this), $(this).val()=='');
 		} else if (id == 'password') {
 			common_validate($(this), $(this).val().length < 6);
